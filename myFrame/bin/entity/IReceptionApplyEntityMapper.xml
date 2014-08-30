@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="entity.mapper.IReceptionApplyEntityMapper" >
+	<resultMap id="BaseResultMap" type="entity.ReceptionApplyEntity" >
+		<id column= "ID" property="id" jdbcType="BIGINT" />
+		<result column= "MBR_ID" property="mbrId" jdbcType="BIGINT" />
+		<result column= "VISITOR" property="visitor" jdbcType="VARCHAR" />
+		<result column= "VISITOR_AMOUNT" property="visitorAmount" jdbcType="INTEGER" />
+		<result column= "START_TIME" property="startTime" jdbcType="VARCHAR" />
+		<result column= "END_TIME" property="endTime" jdbcType="VARCHAR" />
+		<result column= "VISIT_LOCATION" property="visitLocation" jdbcType="VARCHAR" />
+		<result column= "VISIT_OBJECT" property="visitObject" jdbcType="VARCHAR" />
+		<result column= "APPROVEL_LEVEL" property="approvelLevel" jdbcType="INTEGER" />
+		<result column= "ATTACHED_FILE" property="attachedFile" jdbcType="VARCHAR" />
+		<result column= "STATUS" property="status" jdbcType="INTEGER" />
+		<result column= "IS_DELETE" property="isDelete" jdbcType="CHAR" />
+		<result column= "CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+		<result column= "CREATE_DATE" property="createDate" jdbcType="DATE" />
+		<result column= "LAST_UPDATE_PERSON" property="lastUpdatePerson" jdbcType="VARCHAR" />
+		<result column= "LAST_UPDATE_DATE" property="lastUpdateDate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		ID,
+		MBR_ID,
+		VISITOR,
+		VISITOR_AMOUNT,
+		START_TIME,
+		END_TIME,
+		VISIT_LOCATION,
+		VISIT_OBJECT,
+		APPROVEL_LEVEL,
+		ATTACHED_FILE,
+		STATUS,
+		IS_DELETE,
+		CREATE_PERSON,
+		CREATE_DATE,
+		LAST_UPDATE_PERSON,
+		LAST_UPDATE_DATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select <include refid="Base_Column_List" /> from FLOW_RECEPTION_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectLeaveCount" resultType="java.lang.Integer">
+		select count(1) from FLOW_RECEPTION_APPLY_T
+	</select>
+	<select id="list" resultMap="BaseResultMap" parameterType="entity.ReceptionApplyEntityPage">
+		select <include refid="Base_Column_List" /> from FLOW_RECEPTION_APPLY_T 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+		delete from FLOW_RECEPTION_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="entity.ReceptionApplyEntity" >
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS Id 
+		</selectKey>
+		insert into FLOW_RECEPTION_APPLY_T (
+			ID,
+			MBR_ID,
+			VISITOR,
+			VISITOR_AMOUNT,
+			START_TIME,
+			END_TIME,
+			VISIT_LOCATION,
+			VISIT_OBJECT,
+			APPROVEL_LEVEL,
+			ATTACHED_FILE,
+			STATUS,
+			IS_DELETE,
+			CREATE_PERSON,
+			CREATE_DATE,
+			LAST_UPDATE_PERSON,
+			LAST_UPDATE_DATE
+		) values (
+			#{id,jdbcType=BIGINT},
+			#{mbrId,jdbcType=BIGINT},
+			#{visitor,jdbcType=VARCHAR},
+			#{visitorAmount,jdbcType=INTEGER},
+			#{startTime,jdbcType=VARCHAR},
+			#{endTime,jdbcType=VARCHAR},
+			#{visitLocation,jdbcType=VARCHAR},
+			#{visitObject,jdbcType=VARCHAR},
+			#{approvelLevel,jdbcType=INTEGER},
+			#{attachedFile,jdbcType=VARCHAR},
+			#{status,jdbcType=INTEGER},
+			#{isDelete,jdbcType=CHAR},
+			#{createPerson,jdbcType=VARCHAR},
+			#{createDate,jdbcType=DATE},
+			#{lastUpdatePerson,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=DATE}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.ReceptionApplyEntity" >
+		insert into FLOW_RECEPTION_APPLY_T 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >ID,</if>
+			<if test="mbrId!= null" >MBR_ID,</if>
+			<if test="visitor!= null" >VISITOR,</if>
+			<if test="visitorAmount!= null" >VISITOR_AMOUNT,</if>
+			<if test="startTime!= null" >START_TIME,</if>
+			<if test="endTime!= null" >END_TIME,</if>
+			<if test="visitLocation!= null" >VISIT_LOCATION,</if>
+			<if test="visitObject!= null" >VISIT_OBJECT,</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL,</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE,</if>
+			<if test="status!= null" >STATUS,</if>
+			<if test="isDelete!= null" >IS_DELETE,</if>
+			<if test="createPerson!= null" >CREATE_PERSON,</if>
+			<if test="createDate!= null" >CREATE_DATE,</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON,</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >#{id,jdbcType=BIGINT},</if>
+			<if test="mbrId!= null" >#{mbrId,jdbcType=BIGINT},</if>
+			<if test="visitor!= null" >#{visitor,jdbcType=VARCHAR},</if>
+			<if test="visitorAmount!= null" >#{visitorAmount,jdbcType=INTEGER},</if>
+			<if test="startTime!= null" >#{startTime,jdbcType=VARCHAR},</if>
+			<if test="endTime!= null" >#{endTime,jdbcType=VARCHAR},</if>
+			<if test="visitLocation!= null" >#{visitLocation,jdbcType=VARCHAR},</if>
+			<if test="visitObject!= null" >#{visitObject,jdbcType=VARCHAR},</if>
+			<if test="approvelLevel!= null" >#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="attachedFile!= null" >#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="status!= null" >#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >#{lastUpdateDate,jdbcType=DATE},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.ReceptionApplyEntity" >
+		update FLOW_RECEPTION_APPLY_T 
+		<set>
+			<if test="mbrId!= null" >MBR_ID=#{mbrId,jdbcType=BIGINT},</if>
+			<if test="visitor!= null" >VISITOR=#{visitor,jdbcType=VARCHAR},</if>
+			<if test="visitorAmount!= null" >VISITOR_AMOUNT=#{visitorAmount,jdbcType=INTEGER},</if>
+			<if test="startTime!= null" >START_TIME=#{startTime,jdbcType=VARCHAR},</if>
+			<if test="endTime!= null" >END_TIME=#{endTime,jdbcType=VARCHAR},</if>
+			<if test="visitLocation!= null" >VISIT_LOCATION=#{visitLocation,jdbcType=VARCHAR},</if>
+			<if test="visitObject!= null" >VISIT_OBJECT=#{visitObject,jdbcType=VARCHAR},</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="status!= null" >STATUS=#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >IS_DELETE=#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >CREATE_DATE=#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE},</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.ReceptionApplyEntity" >
+		update FLOW_RECEPTION_APPLY_T set 
+			MBR_ID=#{mbrId,jdbcType=BIGINT},
+			VISITOR=#{visitor,jdbcType=VARCHAR},
+			VISITOR_AMOUNT=#{visitorAmount,jdbcType=INTEGER},
+			START_TIME=#{startTime,jdbcType=VARCHAR},
+			END_TIME=#{endTime,jdbcType=VARCHAR},
+			VISIT_LOCATION=#{visitLocation,jdbcType=VARCHAR},
+			VISIT_OBJECT=#{visitObject,jdbcType=VARCHAR},
+			APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},
+			ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},
+			STATUS=#{status,jdbcType=INTEGER},
+			IS_DELETE=#{isDelete,jdbcType=CHAR},
+			CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},
+			CREATE_DATE=#{createDate,jdbcType=DATE},
+			LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},
+			LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

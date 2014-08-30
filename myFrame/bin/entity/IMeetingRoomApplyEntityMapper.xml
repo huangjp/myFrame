@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="entity.mapper.IMeetingRoomApplyEntityMapper" >
+	<resultMap id="BaseResultMap" type="entity.MeetingRoomApplyEntity" >
+		<id column= "ID" property="id" jdbcType="BIGINT" />
+		<result column= "MBR_ID" property="mbrId" jdbcType="BIGINT" />
+		<result column= "MEETING_TYPE" property="meetingType" jdbcType="INTEGER" />
+		<result column= "MEETING_ROOM_TYPE" property="meetingRoomType" jdbcType="INTEGER" />
+		<result column= "START_TIME" property="startTime" jdbcType="VARCHAR" />
+		<result column= "END_TIME" property="endTime" jdbcType="VARCHAR" />
+		<result column= "MEETING_TOPIC" property="meetingTopic" jdbcType="VARCHAR" />
+		<result column= "CONVENTIONER" property="conventioner" jdbcType="VARCHAR" />
+		<result column= "POPULATION" property="population" jdbcType="INTEGER" />
+		<result column= "APPROVEL_LEVEL" property="approvelLevel" jdbcType="INTEGER" />
+		<result column= "ATTACHED_FILE" property="attachedFile" jdbcType="VARCHAR" />
+		<result column= "CONTENT" property="content" jdbcType="VARCHAR" />
+		<result column= "CUSTOMER" property="customer" jdbcType="VARCHAR" />
+		<result column= "CUSTOMER_STATUS" property="customerStatus" jdbcType="INTEGER" />
+		<result column= "STATUS" property="status" jdbcType="INTEGER" />
+		<result column= "IS_DELETE" property="isDelete" jdbcType="CHAR" />
+		<result column= "CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+		<result column= "CREATE_DATE" property="createDate" jdbcType="DATE" />
+		<result column= "LAST_UPDATE_PERSON" property="lastUpdatePerson" jdbcType="VARCHAR" />
+		<result column= "LAST_UPDATE_DATE" property="lastUpdateDate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		ID,
+		MBR_ID,
+		MEETING_TYPE,
+		MEETING_ROOM_TYPE,
+		START_TIME,
+		END_TIME,
+		MEETING_TOPIC,
+		CONVENTIONER,
+		POPULATION,
+		APPROVEL_LEVEL,
+		ATTACHED_FILE,
+		CONTENT,
+		CUSTOMER,
+		CUSTOMER_STATUS,
+		STATUS,
+		IS_DELETE,
+		CREATE_PERSON,
+		CREATE_DATE,
+		LAST_UPDATE_PERSON,
+		LAST_UPDATE_DATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select <include refid="Base_Column_List" /> from FLOW_MEETING_ROOM_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectLeaveCount" resultType="java.lang.Integer">
+		select count(1) from FLOW_MEETING_ROOM_APPLY_T
+	</select>
+	<select id="list" resultMap="BaseResultMap" parameterType="entity.MeetingRoomApplyEntityPage">
+		select <include refid="Base_Column_List" /> from FLOW_MEETING_ROOM_APPLY_T 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+		delete from FLOW_MEETING_ROOM_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="entity.MeetingRoomApplyEntity" >
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS Id 
+		</selectKey>
+		insert into FLOW_MEETING_ROOM_APPLY_T (
+			ID,
+			MBR_ID,
+			MEETING_TYPE,
+			MEETING_ROOM_TYPE,
+			START_TIME,
+			END_TIME,
+			MEETING_TOPIC,
+			CONVENTIONER,
+			POPULATION,
+			APPROVEL_LEVEL,
+			ATTACHED_FILE,
+			CONTENT,
+			CUSTOMER,
+			CUSTOMER_STATUS,
+			STATUS,
+			IS_DELETE,
+			CREATE_PERSON,
+			CREATE_DATE,
+			LAST_UPDATE_PERSON,
+			LAST_UPDATE_DATE
+		) values (
+			#{id,jdbcType=BIGINT},
+			#{mbrId,jdbcType=BIGINT},
+			#{meetingType,jdbcType=INTEGER},
+			#{meetingRoomType,jdbcType=INTEGER},
+			#{startTime,jdbcType=VARCHAR},
+			#{endTime,jdbcType=VARCHAR},
+			#{meetingTopic,jdbcType=VARCHAR},
+			#{conventioner,jdbcType=VARCHAR},
+			#{population,jdbcType=INTEGER},
+			#{approvelLevel,jdbcType=INTEGER},
+			#{attachedFile,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR},
+			#{customer,jdbcType=VARCHAR},
+			#{customerStatus,jdbcType=INTEGER},
+			#{status,jdbcType=INTEGER},
+			#{isDelete,jdbcType=CHAR},
+			#{createPerson,jdbcType=VARCHAR},
+			#{createDate,jdbcType=DATE},
+			#{lastUpdatePerson,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=DATE}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.MeetingRoomApplyEntity" >
+		insert into FLOW_MEETING_ROOM_APPLY_T 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >ID,</if>
+			<if test="mbrId!= null" >MBR_ID,</if>
+			<if test="meetingType!= null" >MEETING_TYPE,</if>
+			<if test="meetingRoomType!= null" >MEETING_ROOM_TYPE,</if>
+			<if test="startTime!= null" >START_TIME,</if>
+			<if test="endTime!= null" >END_TIME,</if>
+			<if test="meetingTopic!= null" >MEETING_TOPIC,</if>
+			<if test="conventioner!= null" >CONVENTIONER,</if>
+			<if test="population!= null" >POPULATION,</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL,</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE,</if>
+			<if test="content!= null" >CONTENT,</if>
+			<if test="customer!= null" >CUSTOMER,</if>
+			<if test="customerStatus!= null" >CUSTOMER_STATUS,</if>
+			<if test="status!= null" >STATUS,</if>
+			<if test="isDelete!= null" >IS_DELETE,</if>
+			<if test="createPerson!= null" >CREATE_PERSON,</if>
+			<if test="createDate!= null" >CREATE_DATE,</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON,</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >#{id,jdbcType=BIGINT},</if>
+			<if test="mbrId!= null" >#{mbrId,jdbcType=BIGINT},</if>
+			<if test="meetingType!= null" >#{meetingType,jdbcType=INTEGER},</if>
+			<if test="meetingRoomType!= null" >#{meetingRoomType,jdbcType=INTEGER},</if>
+			<if test="startTime!= null" >#{startTime,jdbcType=VARCHAR},</if>
+			<if test="endTime!= null" >#{endTime,jdbcType=VARCHAR},</if>
+			<if test="meetingTopic!= null" >#{meetingTopic,jdbcType=VARCHAR},</if>
+			<if test="conventioner!= null" >#{conventioner,jdbcType=VARCHAR},</if>
+			<if test="population!= null" >#{population,jdbcType=INTEGER},</if>
+			<if test="approvelLevel!= null" >#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="attachedFile!= null" >#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="content!= null" >#{content,jdbcType=VARCHAR},</if>
+			<if test="customer!= null" >#{customer,jdbcType=VARCHAR},</if>
+			<if test="customerStatus!= null" >#{customerStatus,jdbcType=INTEGER},</if>
+			<if test="status!= null" >#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >#{lastUpdateDate,jdbcType=DATE},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.MeetingRoomApplyEntity" >
+		update FLOW_MEETING_ROOM_APPLY_T 
+		<set>
+			<if test="mbrId!= null" >MBR_ID=#{mbrId,jdbcType=BIGINT},</if>
+			<if test="meetingType!= null" >MEETING_TYPE=#{meetingType,jdbcType=INTEGER},</if>
+			<if test="meetingRoomType!= null" >MEETING_ROOM_TYPE=#{meetingRoomType,jdbcType=INTEGER},</if>
+			<if test="startTime!= null" >START_TIME=#{startTime,jdbcType=VARCHAR},</if>
+			<if test="endTime!= null" >END_TIME=#{endTime,jdbcType=VARCHAR},</if>
+			<if test="meetingTopic!= null" >MEETING_TOPIC=#{meetingTopic,jdbcType=VARCHAR},</if>
+			<if test="conventioner!= null" >CONVENTIONER=#{conventioner,jdbcType=VARCHAR},</if>
+			<if test="population!= null" >POPULATION=#{population,jdbcType=INTEGER},</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="content!= null" >CONTENT=#{content,jdbcType=VARCHAR},</if>
+			<if test="customer!= null" >CUSTOMER=#{customer,jdbcType=VARCHAR},</if>
+			<if test="customerStatus!= null" >CUSTOMER_STATUS=#{customerStatus,jdbcType=INTEGER},</if>
+			<if test="status!= null" >STATUS=#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >IS_DELETE=#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >CREATE_DATE=#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE},</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.MeetingRoomApplyEntity" >
+		update FLOW_MEETING_ROOM_APPLY_T set 
+			MBR_ID=#{mbrId,jdbcType=BIGINT},
+			MEETING_TYPE=#{meetingType,jdbcType=INTEGER},
+			MEETING_ROOM_TYPE=#{meetingRoomType,jdbcType=INTEGER},
+			START_TIME=#{startTime,jdbcType=VARCHAR},
+			END_TIME=#{endTime,jdbcType=VARCHAR},
+			MEETING_TOPIC=#{meetingTopic,jdbcType=VARCHAR},
+			CONVENTIONER=#{conventioner,jdbcType=VARCHAR},
+			POPULATION=#{population,jdbcType=INTEGER},
+			APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},
+			ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},
+			CONTENT=#{content,jdbcType=VARCHAR},
+			CUSTOMER=#{customer,jdbcType=VARCHAR},
+			CUSTOMER_STATUS=#{customerStatus,jdbcType=INTEGER},
+			STATUS=#{status,jdbcType=INTEGER},
+			IS_DELETE=#{isDelete,jdbcType=CHAR},
+			CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},
+			CREATE_DATE=#{createDate,jdbcType=DATE},
+			LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},
+			LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

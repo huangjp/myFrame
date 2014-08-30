@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="entity.mapper.IArticleApplyEntityMapper" >
+	<resultMap id="BaseResultMap" type="entity.ArticleApplyEntity" >
+		<id column= "ID" property="id" jdbcType="BIGINT" />
+		<result column= "MBR_ID" property="mbrId" jdbcType="BIGINT" />
+		<result column= "ARTICLE_TYPE" property="articleType" jdbcType="INTEGER" />
+		<result column= "PURPOSE" property="purpose" jdbcType="INTEGER" />
+		<result column= "APPROVEL_LEVEL" property="approvelLevel" jdbcType="INTEGER" />
+		<result column= "REASON" property="reason" jdbcType="VARCHAR" />
+		<result column= "ATTACHED_FILE" property="attachedFile" jdbcType="VARCHAR" />
+		<result column= "APPLY_TIME" property="applyTime" jdbcType="VARCHAR" />
+		<result column= "STATUS" property="status" jdbcType="INTEGER" />
+		<result column= "IS_DELETE" property="isDelete" jdbcType="CHAR" />
+		<result column= "CREATE_PERSON" property="createPerson" jdbcType="VARCHAR" />
+		<result column= "CREATE_DATE" property="createDate" jdbcType="DATE" />
+		<result column= "LAST_UPDATE_PERSON" property="lastUpdatePerson" jdbcType="VARCHAR" />
+		<result column= "LAST_UPDATE_DATE" property="lastUpdateDate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		ID,
+		MBR_ID,
+		ARTICLE_TYPE,
+		PURPOSE,
+		APPROVEL_LEVEL,
+		REASON,
+		ATTACHED_FILE,
+		APPLY_TIME,
+		STATUS,
+		IS_DELETE,
+		CREATE_PERSON,
+		CREATE_DATE,
+		LAST_UPDATE_PERSON,
+		LAST_UPDATE_DATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select <include refid="Base_Column_List" /> from FLOW_ARTICLE_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectLeaveCount" resultType="java.lang.Integer">
+		select count(1) from FLOW_ARTICLE_APPLY_T
+	</select>
+	<select id="list" resultMap="BaseResultMap" parameterType="entity.ArticleApplyEntityPage">
+		select <include refid="Base_Column_List" /> from FLOW_ARTICLE_APPLY_T 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+		delete from FLOW_ARTICLE_APPLY_T 
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="entity.ArticleApplyEntity" >
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS Id 
+		</selectKey>
+		insert into FLOW_ARTICLE_APPLY_T (
+			ID,
+			MBR_ID,
+			ARTICLE_TYPE,
+			PURPOSE,
+			APPROVEL_LEVEL,
+			REASON,
+			ATTACHED_FILE,
+			APPLY_TIME,
+			STATUS,
+			IS_DELETE,
+			CREATE_PERSON,
+			CREATE_DATE,
+			LAST_UPDATE_PERSON,
+			LAST_UPDATE_DATE
+		) values (
+			#{id,jdbcType=BIGINT},
+			#{mbrId,jdbcType=BIGINT},
+			#{articleType,jdbcType=INTEGER},
+			#{purpose,jdbcType=INTEGER},
+			#{approvelLevel,jdbcType=INTEGER},
+			#{reason,jdbcType=VARCHAR},
+			#{attachedFile,jdbcType=VARCHAR},
+			#{applyTime,jdbcType=VARCHAR},
+			#{status,jdbcType=INTEGER},
+			#{isDelete,jdbcType=CHAR},
+			#{createPerson,jdbcType=VARCHAR},
+			#{createDate,jdbcType=DATE},
+			#{lastUpdatePerson,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=DATE}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.ArticleApplyEntity" >
+		insert into FLOW_ARTICLE_APPLY_T 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >ID,</if>
+			<if test="mbrId!= null" >MBR_ID,</if>
+			<if test="articleType!= null" >ARTICLE_TYPE,</if>
+			<if test="purpose!= null" >PURPOSE,</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL,</if>
+			<if test="reason!= null" >REASON,</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE,</if>
+			<if test="applyTime!= null" >APPLY_TIME,</if>
+			<if test="status!= null" >STATUS,</if>
+			<if test="isDelete!= null" >IS_DELETE,</if>
+			<if test="createPerson!= null" >CREATE_PERSON,</if>
+			<if test="createDate!= null" >CREATE_DATE,</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON,</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >#{id,jdbcType=BIGINT},</if>
+			<if test="mbrId!= null" >#{mbrId,jdbcType=BIGINT},</if>
+			<if test="articleType!= null" >#{articleType,jdbcType=INTEGER},</if>
+			<if test="purpose!= null" >#{purpose,jdbcType=INTEGER},</if>
+			<if test="approvelLevel!= null" >#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="reason!= null" >#{reason,jdbcType=VARCHAR},</if>
+			<if test="attachedFile!= null" >#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="applyTime!= null" >#{applyTime,jdbcType=VARCHAR},</if>
+			<if test="status!= null" >#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >#{lastUpdateDate,jdbcType=DATE},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.ArticleApplyEntity" >
+		update FLOW_ARTICLE_APPLY_T 
+		<set>
+			<if test="mbrId!= null" >MBR_ID=#{mbrId,jdbcType=BIGINT},</if>
+			<if test="articleType!= null" >ARTICLE_TYPE=#{articleType,jdbcType=INTEGER},</if>
+			<if test="purpose!= null" >PURPOSE=#{purpose,jdbcType=INTEGER},</if>
+			<if test="approvelLevel!= null" >APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},</if>
+			<if test="reason!= null" >REASON=#{reason,jdbcType=VARCHAR},</if>
+			<if test="attachedFile!= null" >ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},</if>
+			<if test="applyTime!= null" >APPLY_TIME=#{applyTime,jdbcType=VARCHAR},</if>
+			<if test="status!= null" >STATUS=#{status,jdbcType=INTEGER},</if>
+			<if test="isDelete!= null" >IS_DELETE=#{isDelete,jdbcType=CHAR},</if>
+			<if test="createPerson!= null" >CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},</if>
+			<if test="createDate!= null" >CREATE_DATE=#{createDate,jdbcType=DATE},</if>
+			<if test="lastUpdatePerson!= null" >LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},</if>
+			<if test="lastUpdateDate!= null" >LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE},</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.ArticleApplyEntity" >
+		update FLOW_ARTICLE_APPLY_T set 
+			MBR_ID=#{mbrId,jdbcType=BIGINT},
+			ARTICLE_TYPE=#{articleType,jdbcType=INTEGER},
+			PURPOSE=#{purpose,jdbcType=INTEGER},
+			APPROVEL_LEVEL=#{approvelLevel,jdbcType=INTEGER},
+			REASON=#{reason,jdbcType=VARCHAR},
+			ATTACHED_FILE=#{attachedFile,jdbcType=VARCHAR},
+			APPLY_TIME=#{applyTime,jdbcType=VARCHAR},
+			STATUS=#{status,jdbcType=INTEGER},
+			IS_DELETE=#{isDelete,jdbcType=CHAR},
+			CREATE_PERSON=#{createPerson,jdbcType=VARCHAR},
+			CREATE_DATE=#{createDate,jdbcType=DATE},
+			LAST_UPDATE_PERSON=#{lastUpdatePerson,jdbcType=VARCHAR},
+			LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=DATE}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

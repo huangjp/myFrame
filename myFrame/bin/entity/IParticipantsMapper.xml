@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="entity.mapper.IParticipantsMapper" >
+	<resultMap id="BaseResultMap" type="entity.Participants" >
+		<id column= "ID" property="id" jdbcType="BIGINT" />
+		<result column= "APPLY_ID" property="applyId" jdbcType="INTEGER" />
+		<result column= "APPLY_TYPE" property="applyType" jdbcType="INTEGER" />
+		<result column= "PARTICIPANTS_ID" property="participantsId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		ID,
+		APPLY_ID,
+		APPLY_TYPE,
+		PARTICIPANTS_ID
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+		select <include refid="Base_Column_List" /> from FLOW_PARTICIPANTS 
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectLeaveCount" resultType="java.lang.Integer">
+		select count(1) from FLOW_PARTICIPANTS
+	</select>
+	<select id="list" resultMap="BaseResultMap" parameterType="entity.ParticipantsPage">
+		select <include refid="Base_Column_List" /> from FLOW_PARTICIPANTS 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+		delete from FLOW_PARTICIPANTS 
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="entity.Participants" >
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS Id 
+		</selectKey>
+		insert into FLOW_PARTICIPANTS (
+			ID,
+			APPLY_ID,
+			APPLY_TYPE,
+			PARTICIPANTS_ID
+		) values (
+			#{id,jdbcType=BIGINT},
+			#{applyId,jdbcType=INTEGER},
+			#{applyType,jdbcType=INTEGER},
+			#{participantsId,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="entity.Participants" >
+		insert into FLOW_PARTICIPANTS 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >ID,</if>
+			<if test="applyId!= null" >APPLY_ID,</if>
+			<if test="applyType!= null" >APPLY_TYPE,</if>
+			<if test="participantsId!= null" >PARTICIPANTS_ID,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!= null" >#{id,jdbcType=BIGINT},</if>
+			<if test="applyId!= null" >#{applyId,jdbcType=INTEGER},</if>
+			<if test="applyType!= null" >#{applyType,jdbcType=INTEGER},</if>
+			<if test="participantsId!= null" >#{participantsId,jdbcType=INTEGER},</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.Participants" >
+		update FLOW_PARTICIPANTS 
+		<set>
+			<if test="applyId!= null" >APPLY_ID=#{applyId,jdbcType=INTEGER},</if>
+			<if test="applyType!= null" >APPLY_TYPE=#{applyType,jdbcType=INTEGER},</if>
+			<if test="participantsId!= null" >PARTICIPANTS_ID=#{participantsId,jdbcType=INTEGER},</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.Participants" >
+		update FLOW_PARTICIPANTS set 
+			APPLY_ID=#{applyId,jdbcType=INTEGER},
+			APPLY_TYPE=#{applyType,jdbcType=INTEGER},
+			PARTICIPANTS_ID=#{participantsId,jdbcType=INTEGER}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

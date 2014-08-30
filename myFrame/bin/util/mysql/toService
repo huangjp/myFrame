@@ -1,0 +1,4 @@
+DriverClass = com.mysql.jdbc.Driver
+url=jdbc\:mysql\://192.168.1.184\:3306/eCloud_All?useUnicode\=true&characterEncoding\=UTF-8&autoReconnect\=true&zeroDateTimeBehavior\=convertToNull
+user = root
+password = 123456
