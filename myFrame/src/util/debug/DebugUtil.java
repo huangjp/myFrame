@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javassist.ClassClassPath;
 import javassist.ClassPool;
@@ -31,6 +32,7 @@ import javassist.bytecode.MethodInfo;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -329,8 +331,31 @@ public class DebugUtil {
 				path = s.replace("\\.\\", "\\");
 			}
 		}
-		if(path == "") {
-			path = getWebPath(c,request);
+		if("".equals(path)) {
+			path = getTheSpecifiedPath(f,c);
+			if("".equals(path)) {
+				path = getWebPath(c, request);
+			}
+		}
+		return path.replace("\\", "/");
+	}
+	
+	private static <T> String getTheSpecifiedPath(File f,Class<T> c) {
+		Properties prop = new Properties();
+		try {
+			prop = PropertiesLoaderUtils.loadAllProperties("flow");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		File file = new File(prop.getProperty("path") + "/src");
+		List<String> list = fileList(
+				new File(file.getAbsoluteFile().toString()),
+				new ArrayList<String>());
+		String path = "";
+		for (String s : list) {
+			if (s.contains(f.toString().replace(".", "\\"))) {
+				path = s.replace("\\.\\", "\\");
+			}
 		}
 		return path.replace("\\", "/");
 	}
