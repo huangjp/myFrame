@@ -360,7 +360,7 @@ public class TableUtilByMyBatis {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("package " + entityPath + ";\r\n\n");
-		sb.append("import com.ecloud.flow.common.base.IBaseMapper;\r\n");
+		sb.append("import com.szyungu.ecmros.common.base.IBaseMapper;\r\n");
 		sb.append("import " + entityPath + "." + name + ";\r\n\n");
 		sb.append("public interface I"+name+"Mapper extends IBaseMapper<"+name+", Long> {\r\n\n");
 		sb.append("\tInteger selectDataCount();\r\n");
@@ -377,11 +377,12 @@ public class TableUtilByMyBatis {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("package " + entityPath + ";\r\n\n");
-		sb.append("import com.ecloud.flow.common.base.IBaseMapper;\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity." + name + ";\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity." + name + "Page;\r\n\n");
+		sb.append("import com.szyungu.ecmros.common.base.IBaseMapper;\r\n");
+		sb.append("import com.szyungu.ecmros.common.base.IBaseService;\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model." + name + ";\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model." + name + "Page;\r\n\n");
 		String name1 = name.replace("Entity", "");
-		sb.append("public interface I"+name1+"Service extends IFlowAbstractSerivce<"+name+", Long> {\r\n\n");
+		sb.append("public interface I"+name1+"Service extends IBaseService<"+name+", Long> {\r\n\n");
 		sb.append("\tInteger selectDataCount();\r\n\n");
 		sb.append("}");
 		return sb.toString();
@@ -395,16 +396,18 @@ public class TableUtilByMyBatis {
 			name = MyUtil.humpcap(className[0].toString().trim());
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("package " + entityPath + ";\r\n\n");
-		sb.append("import com.ecloud.flow.common.base.IBaseMapper;\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity." + name + ";\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity.I" + name + "Mapper;\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity." + name + "Page;\r\n");
-		sb.append("import com.ecloud.flow.formmanagement.entity.I" + name + "Service;\r\n\n");
 		String name1 = name.replace("Entity", "");
-		sb.append("public class "+name1+"Service extends FlowAbstractSerivce<"+name+
+		sb.append("package " + entityPath + ";\r\n\n");
+		sb.append("import org.springframework.beans.factory.annotation.Autowired;\r\n");
+		sb.append("import com.szyungu.ecmros.common.base.IBaseMapper;\r\n");
+		sb.append("import com.szyungu.ecmros.common.base.BaseServiceImpl;\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model." + name + ";\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model.I" + name + "Mapper;\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model." + name + "Page;\r\n");
+		sb.append("import com.szyungu.ecmros.app.book.model.I" + name1 + "Service;\r\n\n");
+		sb.append("public class "+name1+"Service extends BaseServiceImpl<"+name+
 				", Long> implements I"+name1+"Service {\r\n\n");
-		sb.append("\tInteger selectDataCount();\r\n\n");
+//		sb.append("\tInteger selectDataCount();\r\n\n");
 		sb.append("\t@Autowired\r\n");
 		sb.append("\tprivate I"+name+"Mapper mapper;\r\n\n");
 		sb.append("\t@Override\r\n");
@@ -414,11 +417,6 @@ public class TableUtilByMyBatis {
 		sb.append("\t@Override\r\n");
 		sb.append("\tpublic Integer selectDataCount() {\r\n");
 		sb.append("\t\treturn this.mapper.selectDataCount();\r\n");
-		sb.append("\t}\r\n\n");
-		sb.append("\t@Override\r\n");
-		sb.append("\tpublic Object getApplyVO(Long mbrId, Long comyId) {\r\n");
-		sb.append("\t\t// TODO 暂无\r\n");
-		sb.append("\t\treturn null;\r\n");
 		sb.append("\t}\r\n\n");
 		sb.append("}");
 		return sb.toString();
@@ -449,7 +447,7 @@ public class TableUtilByMyBatis {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n");
 		sb.append("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >\r\n");
-		sb.append("<mapper namespace=\""+mapperPath+".mapper.I"+name+"Mapper\" >\r\n");
+		sb.append("<mapper namespace=\""+mapperPath+".dao.mapper.I"+name+"Mapper\" >\r\n");
 		sb.append("\t<resultMap id=\"BaseResultMap\" type=\""+entityPath+"."+name+"\" >\r\n");
 		generateXMLAttr(sb);//属性映射方法
 		sb.append("\t</resultMap>\r\n");
@@ -674,7 +672,7 @@ public class TableUtilByMyBatis {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append("package " + entityPath + ";\r\n\n");
-		//sb.append("import com.ecloud.flow.common.page.PageEntity;\r\n");
+		sb.append("import com.szyungu.ecmros.common.base.PageEntity;\r\n");
 		sb.append("import " + entityPath + "." + name + ";\r\n\n");
 		sb.append("public class "+name+"Page extends PageEntity {\r\n\n");
 		sb.append("\t//private Integer currentPage;// 当前第几页\r\n");
