@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 public class PageEntity {
 	
-//	private static final Logger logger = Logger.getLogger(PageEntity.class);
+	private static final Logger logger = Logger.getLogger(PageEntity.class);
 	
 	//当前第几页
 	private Integer currentPage;
@@ -50,9 +50,9 @@ public class PageEntity {
 	
 	public Integer getDataCount() {
 		if(dataCount == null){
-//			if(logger.isDebugEnabled()){
-//				logger.debug("未传入记录总数！");
-//			}
+			if(logger.isDebugEnabled()){
+				logger.debug("未传入记录总数！");
+			}
 		}
 		return dataCount;
 	}
