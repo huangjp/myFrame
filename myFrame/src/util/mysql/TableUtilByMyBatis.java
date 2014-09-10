@@ -460,7 +460,7 @@ public class TableUtilByMyBatis {
 		sb.append("\t<select id=\"selectDataCount\" resultType=\"java.lang.Integer\">\r\n");
 		generateSelectLeaveCount(sb);
 		sb.append("\t</select>\r\n");
-		sb.append("\t<select id=\"list\" resultMap=\"BaseResultMap\" parameterType=\""+mapperPath+".page."+name+"Page\">\r\n");
+		sb.append("\t<select id=\"queryAllEntities\" resultMap=\"BaseResultMap\" parameterType=\""+mapperPath+".page."+name+"Page\">\r\n");
 		generateList(sb,tableName);//method
 		sb.append("\t</select>\r\n");
 		sb.append("\t<delete id=\"deleteByPrimaryKey\" parameterType=\"java.lang.Long\" >\r\n");
